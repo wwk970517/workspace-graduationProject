@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hand.user.mapper.UserMapper">
+	<resultMap type="com.hand.user.po.User" id="UserMapper">
+		<id property="userId" column="user_id"/>
+		<result property="userName" column="user_name"/>
+		<result property="password" column="password"/>
+		<result property="sex" column="sex"/>
+		<result property="phoneNumber" column="phone_number"/>
+		<result property="creationDate" column="creation_date"/>
+		<result property="lastUpdateDate" column="last_update_date"/>
+		<result property="comments" column="comments"/>
+	</resultMap>
+	<select id="login" parameterType="com.hand.user.po.User"  resultMap="UserMapper">
+		select * from cux_users 
+				where 
+				user_name=#{userName} and password=#{password}
+	</select>
+	<update id="updateUser" parameterType="com.hand.user.po.User">
+		update cux_users set user_name=#{userName},sex=#{sex}
+					, age=#{age}, phone_number=#{phoneNumber}
+					,comments=#{comments}
+					, last_update_date=NOW()
+					where user_id=#{userId}
+	</update>
+	<select id="getUserInfo" parameterType="int" resultMap="UserMapper">
+		select * from cux_users where user_id=#{userId}
+	</select>
+	<update id="password" parameterType="com.hand.user.po.User">
+		update cux_users set password=#{password}	
+		where user_id=#{userId}
+	</update>
+</mapper>
